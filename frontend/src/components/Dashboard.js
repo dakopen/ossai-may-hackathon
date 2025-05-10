@@ -157,14 +157,15 @@ function Dashboard() {
                                     />
                                 </div>
                                 <div className="form-group">
-                                    <label htmlFor="repository_url">Repository URL</label>
+                                    <label htmlFor="repository_url">
+                                        Repository URL (optional)
+                                    </label>
                                     <input
                                         type="url"
                                         id="repository_url"
                                         name="repository_url"
                                         value={newProject.repository_url}
                                         onChange={handleInputChange}
-                                        required
                                         placeholder="https://github.com/username/repo"
                                         disabled={loading}
                                     />
