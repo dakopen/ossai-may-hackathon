@@ -1,8 +1,10 @@
 from django.db import models
 from django.utils import timezone
+import uuid
+
 
 class Project(models.Model):
-    project_id = models.UUIDField(primary_key=True, editable=False)
+    project_id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
     name = models.CharField(max_length=200)
     description = models.TextField()
     creation_date = models.DateTimeField(default=timezone.now)

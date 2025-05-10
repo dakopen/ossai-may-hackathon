@@ -1,7 +1,6 @@
 from django.db import models
 from django.utils import timezone
 from projects.models import Project
-from users.models import User
 
 class TaskStatus(models.TextChoices):
     TODO = "To Do"
@@ -19,13 +18,6 @@ class Task(models.Model):
         max_length=20,
         choices=TaskStatus.choices,
         default=TaskStatus.TODO
-    )
-    assigned_user = models.ForeignKey(
-        User,
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True,
-        related_name='assigned_tasks'
     )
     estimated_effort = models.FloatField(null=True, blank=True)
     actual_effort = models.FloatField(null=True, blank=True)

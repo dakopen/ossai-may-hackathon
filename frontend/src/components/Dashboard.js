@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/Dashboard.css";
 
@@ -11,9 +11,41 @@ function Dashboard() {
         repository_url: "",
     });
     const [projects, setProjects] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        fetchProjects();
+    }, []);
+
+    const fetchProjects = async () => {
+        try {
+            setLoading(true);
+            const response = await fetch("http://localhost:8000/api/projects/", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                setProjects(data);
+            } else {
+                setError("Failed to fetch projects");
+            }
+        } catch (error) {
+            setError("Error fetching projects: " + error.message);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     const handleProjectSubmit = async (e) => {
         e.preventDefault();
+        setError(null);
+        setLoading(true);
+
         try {
             const response = await fetch("http://localhost:8000/api/projects/", {
                 method: "POST",
@@ -28,10 +60,13 @@ function Dashboard() {
                 setProjects([...projects, data]);
                 setNewProject({ name: "", description: "", repository_url: "" });
             } else {
-                console.error("Failed to add project");
+                const errorData = await response.json();
+                setError(errorData.detail || "Failed to add project");
             }
         } catch (error) {
-            console.error("Error adding project:", error);
+            setError("Error adding project: " + error.message);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -66,6 +101,8 @@ function Dashboard() {
             </nav>
 
             <main className="dashboard-content">
+                {error && <div className="error-message">{error}</div>}
+
                 {activeTab === "overview" ? (
                     <>
                         <div className="dashboard-header">
@@ -76,7 +113,7 @@ function Dashboard() {
                         <div className="dashboard-grid">
                             <div className="dashboard-card">
                                 <h3>Active Projects</h3>
-                                <p className="card-value">{projects.length}</p>
+                                <p className="card-value">{loading ? "..." : projects.length}</p>
                             </div>
                             <div className="dashboard-card">
                                 <h3>Contributions</h3>
@@ -104,6 +141,7 @@ function Dashboard() {
                                         onChange={handleInputChange}
                                         required
                                         placeholder="Enter project name"
+                                        disabled={loading}
                                     />
                                 </div>
                                 <div className="form-group">
@@ -115,6 +153,7 @@ function Dashboard() {
                                         onChange={handleInputChange}
                                         required
                                         placeholder="Enter project description"
+                                        disabled={loading}
                                     />
                                 </div>
                                 <div className="form-group">
@@ -127,17 +166,20 @@ function Dashboard() {
                                         onChange={handleInputChange}
                                         required
                                         placeholder="https://github.com/username/repo"
+                                        disabled={loading}
                                     />
                                 </div>
-                                <button type="submit" className="submit-btn">
-                                    Add Project
+                                <button type="submit" className="submit-btn" disabled={loading}>
+                                    {loading ? "Adding..." : "Add Project"}
                                 </button>
                             </form>
                         </div>
 
                         <div className="projects-list">
                             <h2>Your Projects</h2>
-                            {projects.length === 0 ? (
+                            {loading ? (
+                                <p className="loading">Loading projects...</p>
+                            ) : projects.length === 0 ? (
                                 <p className="no-projects">No projects added yet</p>
                             ) : (
                                 <div className="projects-grid">
