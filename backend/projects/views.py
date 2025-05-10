@@ -49,14 +49,17 @@ class ProjectViewSet(viewsets.ModelViewSet):
             
             # Prepare prompt for Gemini
             prompt = f"""Given the following project details, generate a list of tasks that need to be completed. 
-            For each task, provide a title, description (bullet points, 3 to 5 short concise sentences), and estimated effort in hours.
+            For each task, provide a title, description (short and concise, use newlines to separate paragraphs), and estimated effort in hours.
             Format each task as a JSON object with 'title', 'description', and 'estimated_effort' fields.
-            Return only a JSON array of tasks.
+            Return only a JSON array of tasks. For each task, in the description add a couple of newlines and then generate a AI Prompt for AI Copilot to complete the task.
 
             Project Name: {project.name}
             Project Description: {project.description}
             
             Existing tasks (avoid duplicates): {list(existing_tasks)}
+            
+            Make the tasks related to the existing tasks so they build on each other.
+
             
             Generate tasks that are specific, measurable, and achievable. Include tasks for planning, development, testing, and deployment phases."""
 

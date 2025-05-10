@@ -31,6 +31,9 @@ function ProjectDetails() {
         repository_url: "",
     });
     const [isGeneratingTasks, setIsGeneratingTasks] = useState(false);
+    const [selectedTask, setSelectedTask] = useState(null);
+    const [generatedPrompt, setGeneratedPrompt] = useState(null);
+    const [isGeneratingPrompt, setIsGeneratingPrompt] = useState(false);
 
     useEffect(() => {
         fetchProject();
@@ -275,6 +278,38 @@ function ProjectDetails() {
         }
     };
 
+    const handleGeneratePrompt = async (task) => {
+        try {
+            setIsGeneratingPrompt(true);
+            setSelectedTask(task);
+            const response = await fetch(
+                `http://localhost:8000/api/tasks/${task.task_id}/generate_prompt/`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                }
+            );
+
+            if (response.ok) {
+                const data = await response.json();
+                setGeneratedPrompt(data.prompt);
+            } else {
+                setError("Failed to generate prompt");
+            }
+        } catch (err) {
+            setError("Error generating prompt");
+        } finally {
+            setIsGeneratingPrompt(false);
+        }
+    };
+
+    const closePromptModal = () => {
+        setSelectedTask(null);
+        setGeneratedPrompt(null);
+    };
+
     if (loading) return <div className="loading">Loading project...</div>;
     if (error) return <div className="error-message">{error}</div>;
     if (!project) return null;
@@ -489,12 +524,24 @@ function ProjectDetails() {
                                                     </span>
                                                 </div>
                                             )}
-                                            <button
-                                                className="delete-task-btn"
-                                                onClick={() => handleDeleteTask(task.task_id)}
-                                            >
-                                                ×
-                                            </button>
+                                            <div className="task-actions">
+                                                <button
+                                                    className="generate-prompt-btn"
+                                                    onClick={() => handleGeneratePrompt(task)}
+                                                    disabled={isGeneratingPrompt}
+                                                >
+                                                    {isGeneratingPrompt &&
+                                                    selectedTask?.task_id === task.task_id
+                                                        ? "Generating..."
+                                                        : "Generate AI Prompt"}
+                                                </button>
+                                                <button
+                                                    className="delete-task-btn"
+                                                    onClick={() => handleDeleteTask(task.task_id)}
+                                                >
+                                                    ×
+                                                </button>
+                                            </div>
                                         </div>
                                     ))}
                                 </div>
@@ -503,6 +550,39 @@ function ProjectDetails() {
                     </div>
                 </div>
             </main>
+
+            {/* Prompt Modal */}
+            {selectedTask && (
+                <div className="prompt-modal-overlay" onClick={closePromptModal}>
+                    <div className="prompt-modal" onClick={(e) => e.stopPropagation()}>
+                        <div className="prompt-modal-header">
+                            <h3>AI Prompt for: {selectedTask.title}</h3>
+                            <button className="close-modal-btn" onClick={closePromptModal}>
+                                ×
+                            </button>
+                        </div>
+                        <div className="prompt-modal-content">
+                            {isGeneratingPrompt ? (
+                                <div className="loading-prompt">Generating prompt...</div>
+                            ) : generatedPrompt ? (
+                                <div className="prompt-content">
+                                    <pre>{generatedPrompt}</pre>
+                                    <button
+                                        className="copy-prompt-btn"
+                                        onClick={() => {
+                                            navigator.clipboard.writeText(generatedPrompt);
+                                        }}
+                                    >
+                                        Copy to Clipboard
+                                    </button>
+                                </div>
+                            ) : (
+                                <div className="error-message">Failed to generate prompt</div>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
