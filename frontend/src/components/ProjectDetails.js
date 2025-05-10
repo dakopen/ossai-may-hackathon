@@ -215,7 +215,7 @@ function ProjectDetails() {
         <div className="dashboard">
             <nav className="dashboard-nav">
                 <div className="logo" onClick={() => navigate("/")}>
-                    OSSAI
+                    Project Pilot
                 </div>
                 <button className="dashboard-btn" onClick={() => navigate("/dashboard")}>
                     Back to Dashboard

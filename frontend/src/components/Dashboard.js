@@ -82,7 +82,7 @@ function Dashboard() {
         <div className="dashboard">
             <nav className="dashboard-nav">
                 <div className="logo" onClick={() => navigate("/")}>
-                    OSSAI
+                    Project Pilot
                 </div>
                 <div className="nav-links">
                     <button
@@ -107,7 +107,7 @@ function Dashboard() {
                     <>
                         <div className="dashboard-header">
                             <h1>Dashboard</h1>
-                            <p>Welcome to your OSSAI dashboard</p>
+                            <p>Welcome to your Project Pilot dashboard</p>
                         </div>
 
                         <div className="dashboard-grid">

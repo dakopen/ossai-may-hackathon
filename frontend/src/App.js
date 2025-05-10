@@ -10,7 +10,7 @@ function Home() {
     return (
         <div className="App">
             <nav className="navbar">
-                <div className="logo">OSSAI</div>
+                <div className="logo">Project Pilot</div>
                 <button className="dashboard-btn" onClick={() => navigate("/dashboard")}>
                     Dashboard
                 </button>
