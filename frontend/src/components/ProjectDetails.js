@@ -30,6 +30,7 @@ function ProjectDetails() {
         description: "",
         repository_url: "",
     });
+    const [isGeneratingTasks, setIsGeneratingTasks] = useState(false);
 
     useEffect(() => {
         fetchProject();
@@ -207,6 +208,42 @@ function ProjectDetails() {
         }
     };
 
+    const handleGenerateTasks = async () => {
+        try {
+            setIsGeneratingTasks(true);
+            const response = await fetch(
+                `http://localhost:8000/api/projects/${projectId}/generate_tasks/`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                }
+            );
+
+            if (response.ok) {
+                const data = await response.json();
+                // Update tasks state with new tasks
+                setTasks((prev) => {
+                    const updatedTasks = { ...prev };
+                    data.tasks.forEach((task) => {
+                        if (!updatedTasks[TASK_STATUSES.TODO]) {
+                            updatedTasks[TASK_STATUSES.TODO] = [];
+                        }
+                        updatedTasks[TASK_STATUSES.TODO].push(task);
+                    });
+                    return updatedTasks;
+                });
+            } else {
+                setError("Failed to generate tasks");
+            }
+        } catch (err) {
+            setError("Error generating tasks");
+        } finally {
+            setIsGeneratingTasks(false);
+        }
+    };
+
     if (loading) return <div className="loading">Loading project...</div>;
     if (error) return <div className="error-message">{error}</div>;
     if (!project) return null;
@@ -314,9 +351,18 @@ function ProjectDetails() {
                 <div className="kanban-board">
                     <div className="kanban-header">
                         <h2>Tasks</h2>
-                        <button className="add-task-btn" onClick={() => setShowAddTask(true)}>
-                            Add Task
-                        </button>
+                        <div className="kanban-actions">
+                            <button
+                                className="ai-task-btn"
+                                onClick={handleGenerateTasks}
+                                disabled={isGeneratingTasks}
+                            >
+                                {isGeneratingTasks ? "Generating..." : "Break project into tasks"}
+                            </button>
+                            <button className="add-task-btn" onClick={() => setShowAddTask(true)}>
+                                Add Task
+                            </button>
+                        </div>
                     </div>
 
                     {showAddTask && (

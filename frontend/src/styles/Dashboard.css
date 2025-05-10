@@ -342,6 +342,12 @@
     font-weight: 600;
 }
 
+.kanban-actions {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
 .add-task-btn {
     background: #4a90e2;
     color: white;
@@ -353,12 +359,100 @@
     font-weight: 500;
     transition: all 0.2s ease;
     box-shadow: 0 2px 4px rgba(74, 144, 226, 0.2);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.add-task-btn::before {
+    content: "+";
+    font-size: 1.2rem;
 }
 
 .add-task-btn:hover {
     background: #357abd;
     transform: translateY(-1px);
     box-shadow: 0 4px 8px rgba(74, 144, 226, 0.3);
+}
+
+.ai-task-btn {
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(99, 102, 241, 0.2);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.ai-task-btn::before {
+    content: "🤖";
+    font-size: 1.2rem;
+}
+
+.ai-task-btn::after {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transform: rotate(45deg);
+    transition: all 0.3s ease;
+}
+
+.ai-task-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(99, 102, 241, 0.3);
+}
+
+.ai-task-btn:hover::after {
+    left: 100%;
+}
+
+.ai-task-btn:disabled {
+    background: #a0aec0;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.ai-task-btn:disabled::after {
+    display: none;
+}
+
+.ai-task-btn.loading {
+    position: relative;
+    color: transparent;
+}
+
+.ai-task-btn.loading::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 1.5rem;
+    height: 1.5rem;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: white;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
 }
 
 .kanban-columns {
