@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import "../styles/Dashboard.css";
 
 function Dashboard() {
@@ -185,18 +185,27 @@ function Dashboard() {
                             ) : (
                                 <div className="projects-grid">
                                     {projects.map((project) => (
-                                        <div key={project.id} className="project-card">
-                                            <h3>{project.name}</h3>
-                                            <p>{project.description}</p>
-                                            <a
-                                                href={project.repository_url}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="repo-link"
-                                            >
-                                                View Repository
-                                            </a>
-                                        </div>
+                                        <Link
+                                            key={project.project_id}
+                                            to={`/dashboard/projects/${project.project_id}`}
+                                            className="project-card-link"
+                                            style={{ textDecoration: "none" }}
+                                        >
+                                            <div className="project-card">
+                                                <h3>{project.name}</h3>
+                                                <p>{project.description}</p>
+                                                {project.repository_url && (
+                                                    <a
+                                                        href={project.repository_url}
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        className="repo-link"
+                                                    >
+                                                        View Repository
+                                                    </a>
+                                                )}
+                                            </div>
+                                        </Link>
                                     ))}
                                 </div>
                             )}

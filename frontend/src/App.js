@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
 import "./App.css";
 import Dashboard from "./components/Dashboard";
+import ProjectDetails from "./components/ProjectDetails";
 
 function Home() {
     const navigate = useNavigate();
@@ -38,6 +39,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/dashboard/projects/:projectId" element={<ProjectDetails />} />
             </Routes>
         </Router>
     );

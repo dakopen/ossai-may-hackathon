@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from projects.models import Project
+import uuid
 
 class TaskStatus(models.TextChoices):
     TODO = "To Do"
@@ -10,7 +11,7 @@ class TaskStatus(models.TextChoices):
     COMPLETED = "Completed"
 
 class Task(models.Model):
-    task_id = models.UUIDField(primary_key=True, editable=False)
+    task_id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='tasks')
     title = models.CharField(max_length=200)
     description = models.TextField()
