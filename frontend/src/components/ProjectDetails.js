@@ -24,11 +24,27 @@ function ProjectDetails() {
         estimated_effort: "",
     });
     const [showAddTask, setShowAddTask] = useState(false);
+    const [isEditing, setIsEditing] = useState(false);
+    const [editedProject, setEditedProject] = useState({
+        name: "",
+        description: "",
+        repository_url: "",
+    });
 
     useEffect(() => {
         fetchProject();
         fetchTasks();
     }, [projectId]);
+
+    useEffect(() => {
+        if (project) {
+            setEditedProject({
+                name: project.name,
+                description: project.description,
+                repository_url: project.repository_url || "",
+            });
+        }
+    }, [project]);
 
     const fetchProject = async () => {
         try {
@@ -168,6 +184,29 @@ function ProjectDetails() {
         e.preventDefault();
     };
 
+    const handleProjectEdit = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await fetch(`http://localhost:8000/api/projects/${projectId}/`, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(editedProject),
+            });
+
+            if (response.ok) {
+                const updatedProject = await response.json();
+                setProject(updatedProject);
+                setIsEditing(false);
+            } else {
+                setError("Failed to update project");
+            }
+        } catch (err) {
+            setError("Error updating project");
+        }
+    };
+
     if (loading) return <div className="loading">Loading project...</div>;
     if (error) return <div className="error-message">{error}</div>;
     if (!project) return null;
@@ -184,24 +223,92 @@ function ProjectDetails() {
             </nav>
             <main className="dashboard-content">
                 <div className="dashboard-header">
-                    <h1>{project.name}</h1>
-                    <p>{project.description}</p>
-                    {project.repository_url && (
-                        <a
-                            href={project.repository_url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="repo-link"
-                        >
-                            View Repository
-                        </a>
+                    {isEditing ? (
+                        <form onSubmit={handleProjectEdit} className="edit-project-form">
+                            <div className="form-group">
+                                <label htmlFor="project-name">Project Name</label>
+                                <input
+                                    type="text"
+                                    id="project-name"
+                                    value={editedProject.name}
+                                    onChange={(e) =>
+                                        setEditedProject({ ...editedProject, name: e.target.value })
+                                    }
+                                    required
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="project-description">Description</label>
+                                <textarea
+                                    id="project-description"
+                                    value={editedProject.description}
+                                    onChange={(e) =>
+                                        setEditedProject({
+                                            ...editedProject,
+                                            description: e.target.value,
+                                        })
+                                    }
+                                    required
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="project-repo">Repository URL (optional)</label>
+                                <input
+                                    type="url"
+                                    id="project-repo"
+                                    value={editedProject.repository_url}
+                                    onChange={(e) =>
+                                        setEditedProject({
+                                            ...editedProject,
+                                            repository_url: e.target.value,
+                                        })
+                                    }
+                                    placeholder="https://github.com/username/repo"
+                                />
+                            </div>
+                            <div className="form-actions">
+                                <button type="submit" className="submit-btn">
+                                    Save Changes
+                                </button>
+                                <button
+                                    type="button"
+                                    className="cancel-btn"
+                                    onClick={() => setIsEditing(false)}
+                                >
+                                    Cancel
+                                </button>
+                            </div>
+                        </form>
+                    ) : (
+                        <>
+                            <div className="project-header-actions">
+                                <h1>{project.name}</h1>
+                                <button
+                                    className="edit-project-btn"
+                                    onClick={() => setIsEditing(true)}
+                                >
+                                    Edit Project
+                                </button>
+                            </div>
+                            <p>{project.description}</p>
+                            {project.repository_url && (
+                                <a
+                                    href={project.repository_url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="repo-link"
+                                >
+                                    View Repository
+                                </a>
+                            )}
+                            <p className="project-date">
+                                Created: {new Date(project.creation_date).toLocaleString()}
+                            </p>
+                            <p className="project-date">
+                                Last Updated: {new Date(project.last_update_date).toLocaleString()}
+                            </p>
+                        </>
                     )}
-                    <p className="project-date">
-                        Created: {new Date(project.creation_date).toLocaleString()}
-                    </p>
-                    <p className="project-date">
-                        Last Updated: {new Date(project.last_update_date).toLocaleString()}
-                    </p>
                 </div>
 
                 <div className="kanban-board">
