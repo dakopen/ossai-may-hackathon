@@ -175,6 +175,9 @@ function ProjectDetails() {
                     newTasks[newStatus].push(updatedTask);
                     return newTasks;
                 });
+            } else {
+                const errorData = await response.json();
+                setError(`Error updating task status: ${errorData.detail || "Unknown error"}`);
             }
         } catch (err) {
             setError("Error updating task status");
@@ -230,7 +233,13 @@ function ProjectDetails() {
                         if (!updatedTasks[TASK_STATUSES.TODO]) {
                             updatedTasks[TASK_STATUSES.TODO] = [];
                         }
-                        updatedTasks[TASK_STATUSES.TODO].push(task);
+                        // Ensure task has all required fields including task_id
+                        const taskWithId = {
+                            ...task,
+                            task_id: task.task_id || task.id, // Handle both possible ID field names
+                            status: TASK_STATUSES.TODO,
+                        };
+                        updatedTasks[TASK_STATUSES.TODO].push(taskWithId);
                     });
                     return updatedTasks;
                 });

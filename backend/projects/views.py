@@ -104,7 +104,13 @@ class ProjectViewSet(viewsets.ModelViewSet):
             
             return Response({
                 'message': f'Successfully generated {len(created_tasks)} tasks',
-                'tasks': [{'title': task.title, 'description': task.description, 'estimated_effort': task.estimated_effort} for task in created_tasks]
+                'tasks': [{
+                    'task_id': str(task.task_id),
+                    'title': task.title,
+                    'description': task.description,
+                    'estimated_effort': task.estimated_effort,
+                    'status': task.status
+                } for task in created_tasks]
             }, status=status.HTTP_201_CREATED)
             
         except json.JSONDecodeError as e:
