@@ -211,6 +211,28 @@ function ProjectDetails() {
         }
     };
 
+    const handleDeleteProject = async () => {
+        if (
+            window.confirm(
+                "Are you sure you want to delete this project? This action cannot be undone."
+            )
+        ) {
+            try {
+                const response = await fetch(`http://localhost:8000/api/projects/${projectId}/`, {
+                    method: "DELETE",
+                });
+
+                if (response.ok) {
+                    navigate("/dashboard");
+                } else {
+                    setError("Failed to delete project");
+                }
+            } catch (err) {
+                setError("Error deleting project");
+            }
+        }
+    };
+
     const handleGenerateTasks = async () => {
         try {
             setIsGeneratingTasks(true);
@@ -329,12 +351,20 @@ function ProjectDetails() {
                         <>
                             <div className="project-header-actions">
                                 <h1>{project.name}</h1>
-                                <button
-                                    className="edit-project-btn"
-                                    onClick={() => setIsEditing(true)}
-                                >
-                                    Edit Project
-                                </button>
+                                <div className="project-actions">
+                                    <button
+                                        className="edit-project-btn"
+                                        onClick={() => setIsEditing(true)}
+                                    >
+                                        Edit Project
+                                    </button>
+                                    <button
+                                        className="delete-project-btn"
+                                        onClick={handleDeleteProject}
+                                    >
+                                        Delete Project
+                                    </button>
+                                </div>
                             </div>
                             <p>{project.description}</p>
                             {project.repository_url && (
