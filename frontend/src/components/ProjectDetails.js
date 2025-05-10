@@ -5,9 +5,9 @@ import "../styles/Dashboard.css";
 const TASK_STATUSES = {
     TODO: "To Do",
     IN_PROGRESS: "In Progress",
-    BLOCKED: "Blocked",
     IN_REVIEW: "In Review",
     COMPLETED: "Completed",
+    BLOCKED: "Blocked",
 };
 
 function ProjectDetails() {
