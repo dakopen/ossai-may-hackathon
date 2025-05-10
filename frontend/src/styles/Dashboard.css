@@ -1,118 +1,259 @@
 .dashboard {
     min-height: 100vh;
     background: #f8fafc;
+    padding-bottom: 2rem;
 }
 
 .dashboard-nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 2rem;
+    padding: 1.25rem 2rem;
     background: white;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 
 .dashboard-nav .logo {
-    font-size: 1.5rem;
+    font-size: 1.75rem;
     font-weight: 700;
     color: #2d3748;
     cursor: pointer;
+    transition: color 0.2s ease;
 }
 
-.nav-links {
-    display: flex;
-    gap: 1rem;
+.dashboard-nav .logo:hover {
+    color: #4a90e2;
 }
 
-.nav-btn {
-    padding: 0.5rem 1rem;
+.dashboard-btn {
+    background: #4a90e2;
+    color: white;
     border: none;
-    background: none;
-    color: #4a5568;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
     font-weight: 500;
     cursor: pointer;
-    border-radius: 6px;
     transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(74, 144, 226, 0.2);
 }
 
-.nav-btn:hover {
-    background: #f7fafc;
-    color: #2d3748;
-}
-
-.nav-btn.active {
-    background: #ebf8ff;
-    color: #2b6cb0;
+.dashboard-btn:hover {
+    background: #357abd;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(74, 144, 226, 0.3);
 }
 
 .dashboard-content {
     padding: 2rem;
-    max-width: 1200px;
+    max-width: 1600px;
     margin: 0 auto;
 }
 
 .dashboard-header {
-    margin-bottom: 2rem;
-}
-
-.dashboard-header h1 {
-    font-size: 2rem;
-    color: #2d3748;
-    margin-bottom: 0.5rem;
-}
-
-.dashboard-header p {
-    color: #718096;
-}
-
-.dashboard-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
-    margin-top: 2rem;
-}
-
-.dashboard-card {
+    margin-bottom: 2.5rem;
     background: white;
-    padding: 1.5rem;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    transition: transform 0.2s ease;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
-.dashboard-card:hover {
+.project-header-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.project-header-actions h1 {
+    font-size: 2.5rem;
+    color: #2d3748;
+    margin: 0;
+    font-weight: 700;
+}
+
+.edit-project-btn {
+    background: #4a90e2;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(74, 144, 226, 0.2);
+}
+
+.edit-project-btn:hover {
+    background: #357abd;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(74, 144, 226, 0.3);
+}
+
+.kanban-board {
+    margin-top: 2rem;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    padding: 2rem;
+}
+
+.kanban-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #f0f4f8;
+}
+
+.kanban-header h2 {
+    font-size: 1.75rem;
+    color: #2d3748;
+    margin: 0;
+    font-weight: 600;
+}
+
+.add-task-btn {
+    background: #4a90e2;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(74, 144, 226, 0.2);
+}
+
+.add-task-btn:hover {
+    background: #357abd;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(74, 144, 226, 0.3);
+}
+
+.kanban-columns {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1.5rem;
+    min-height: 600px;
+    align-items: start;
+}
+
+.kanban-column {
+    background: #f8fafc;
+    border-radius: 12px;
+    padding: 1.5rem;
+    min-height: 100%;
+    transition: all 0.2s ease;
+}
+
+.kanban-column:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.kanban-column h3 {
+    margin: 0 0 1.5rem 0;
+    color: #2d3748;
+    font-size: 1.1rem;
+    text-align: center;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #e2e8f0;
+    font-weight: 600;
+}
+
+.task-list {
+    min-height: 100px;
+    padding: 0.5rem;
+}
+
+.task-card {
+    background: white;
+    border-radius: 8px;
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    cursor: move;
+    transition: all 0.2s ease;
+    border: 1px solid #e2e8f0;
+    position: relative;
+}
+
+.task-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     transform: translateY(-2px);
 }
 
-.dashboard-card h3 {
-    color: #4a5568;
-    font-size: 1.1rem;
-    margin-bottom: 1rem;
-}
-
-.card-value {
-    font-size: 2rem;
-    font-weight: 700;
+.task-card h4 {
+    margin: 0 0 0.75rem 0;
     color: #2d3748;
+    font-size: 1.1rem;
+    font-weight: 600;
+    padding-right: 2rem;
 }
 
-/* Projects Section Styles */
-.projects-section {
-    max-width: 800px;
-    margin: 0 auto;
+.task-card p {
+    margin: 0 0 0.75rem 0;
+    color: #4a5568;
+    font-size: 0.95rem;
+    line-height: 1.5;
 }
 
-.add-project-form {
+.effort-container {
+    display: inline-flex;
+    align-items: center;
+    background: #ebf8ff;
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+    margin-top: 0.75rem;
+}
+
+.effort {
+    color: #2b6cb0;
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin: 0;
+}
+
+.delete-task-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    color: #a0aec0;
+    border: none;
+    padding: 0.25rem;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: all 0.2s ease;
+    width: auto;
+    opacity: 0.6;
+}
+
+.delete-task-btn:hover {
+    color: #e53e3e;
+    opacity: 1;
+    transform: none;
+    background: none;
+}
+
+.add-task-form {
     background: white;
     padding: 2rem;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    border-radius: 12px;
     margin-bottom: 2rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.add-project-form h2 {
+.add-task-form h3 {
+    margin: 0 0 1.5rem 0;
     color: #2d3748;
-    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+    font-weight: 600;
 }
 
 .form-group {
@@ -121,19 +262,21 @@
 
 .form-group label {
     display: block;
-    color: #4a5568;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.75rem;
+    color: #2d3748;
     font-weight: 500;
+    font-size: 1rem;
 }
 
 .form-group input,
 .form-group textarea {
     width: 100%;
-    padding: 0.75rem;
-    border: 1px solid #e2e8f0;
-    border-radius: 6px;
+    padding: 0.875rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
     font-size: 1rem;
-    transition: border-color 0.2s ease;
+    transition: all 0.2s ease;
+    background: #f8fafc;
 }
 
 .form-group input:focus,
@@ -141,398 +284,122 @@
     outline: none;
     border-color: #4a90e2;
     box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+    background: white;
 }
 
 .form-group textarea {
-    min-height: 100px;
+    min-height: 120px;
     resize: vertical;
+}
+
+.form-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
 }
 
 .submit-btn {
     background: #4a90e2;
     color: white;
     border: none;
-    padding: 0.75rem 1.5rem;
-    border-radius: 6px;
-    font-weight: 500;
+    padding: 0.875rem 1.75rem;
+    border-radius: 8px;
     cursor: pointer;
+    font-weight: 500;
+    font-size: 1rem;
     transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(74, 144, 226, 0.2);
 }
 
 .submit-btn:hover {
     background: #357abd;
     transform: translateY(-1px);
-}
-
-.projects-list {
-    margin-top: 3rem;
-}
-
-.projects-list h2 {
-    color: #2d3748;
-    margin-bottom: 1.5rem;
-}
-
-.no-projects {
-    text-align: center;
-    color: #718096;
-    padding: 2rem;
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-}
-
-.projects-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1.5rem;
-}
-
-.project-card {
-    background: white;
-    padding: 1.5rem;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    transition: transform 0.2s ease;
-}
-
-.project-card:hover {
-    transform: translateY(-2px);
-}
-
-.project-card h3 {
-    color: #2d3748;
-    margin-bottom: 0.5rem;
-}
-
-.project-card p {
-    color: #718096;
-    margin-bottom: 1rem;
-    line-height: 1.5;
-}
-
-.repo-link {
-    display: inline-block;
-    color: #4a90e2;
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.2s ease;
-}
-
-.repo-link:hover {
-    color: #357abd;
-}
-
-.project-card-link {
-    color: inherit;
-    text-decoration: none;
-    display: block;
-}
-
-.project-card-link:focus .project-card,
-.project-card-link:hover .project-card {
-    box-shadow: 0 4px 12px rgba(74, 144, 226, 0.15);
-    transform: translateY(-4px);
-}
-
-@media (max-width: 768px) {
-    .dashboard-nav {
-        flex-direction: column;
-        gap: 1rem;
-        padding: 1rem;
-    }
-
-    .nav-links {
-        width: 100%;
-        justify-content: center;
-    }
-
-    .dashboard-content {
-        padding: 1rem;
-    }
-
-    .add-project-form {
-        padding: 1.5rem;
-    }
-
-    .projects-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
-.error-message {
-    background: #fff5f5;
-    color: #c53030;
-    padding: 1rem;
-    border-radius: 6px;
-    margin-bottom: 1rem;
-    border: 1px solid #feb2b2;
-}
-
-.loading {
-    text-align: center;
-    color: #718096;
-    padding: 2rem;
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-}
-
-.submit-btn:disabled {
-    background: #a0aec0;
-    cursor: not-allowed;
-    transform: none;
-}
-
-.submit-btn:disabled:hover {
-    background: #a0aec0;
-    transform: none;
-}
-
-.kanban-board {
-    margin-top: 2rem;
-    padding: 1rem;
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.kanban-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1.5rem;
-}
-
-.add-task-btn {
-    background: #4a90e2;
-    color: white;
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 0.9rem;
-}
-
-.add-task-btn:hover {
-    background: #357abd;
-}
-
-.kanban-columns {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 1rem;
-    min-height: 500px;
-}
-
-.kanban-column {
-    background: #f5f7fa;
-    border-radius: 6px;
-    padding: 1rem;
-    min-height: 100%;
-}
-
-.kanban-column h3 {
-    margin: 0 0 1rem 0;
-    color: #2c3e50;
-    font-size: 1rem;
-    text-align: center;
-    padding-bottom: 0.5rem;
-    border-bottom: 2px solid #e1e8ed;
-}
-
-.task-list {
-    min-height: 100px;
-}
-
-.task-card {
-    background: white;
-    border-radius: 4px;
-    padding: 1rem;
-    margin-bottom: 1rem;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    cursor: move;
-}
-
-.task-card:hover {
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
-}
-
-.task-card h4 {
-    margin: 0 0 0.5rem 0;
-    color: #2c3e50;
-}
-
-.task-card p {
-    margin: 0 0 0.5rem 0;
-    color: #666;
-    font-size: 0.9rem;
-}
-
-.effort {
-    color: #4a90e2;
-    font-size: 0.8rem;
-    margin-top: 0.5rem;
-}
-
-.delete-task-btn {
-    background: #e74c3c;
-    color: white;
-    border: none;
-    padding: 0.25rem 0.5rem;
-    border-radius: 3px;
-    cursor: pointer;
-    font-size: 0.8rem;
-    margin-top: 0.5rem;
-}
-
-.delete-task-btn:hover {
-    background: #c0392b;
-}
-
-.add-task-form {
-    background: white;
-    padding: 1.5rem;
-    border-radius: 6px;
-    margin-bottom: 1.5rem;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.add-task-form h3 {
-    margin: 0 0 1rem 0;
-    color: #2c3e50;
-}
-
-.form-actions {
-    display: flex;
-    gap: 1rem;
-    margin-top: 1rem;
+    box-shadow: 0 4px 8px rgba(74, 144, 226, 0.3);
 }
 
 .cancel-btn {
     background: #95a5a6;
     color: white;
     border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
+    padding: 0.875rem 1.75rem;
+    border-radius: 8px;
     cursor: pointer;
+    font-weight: 500;
+    font-size: 1rem;
+    transition: all 0.2s ease;
 }
 
 .cancel-btn:hover {
     background: #7f8c8d;
+    transform: translateY(-1px);
 }
 
-@media (max-width: 1200px) {
+.error-message {
+    background: #fff5f5;
+    color: #c53030;
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    border: 1px solid #feb2b2;
+    font-weight: 500;
+}
+
+.loading {
+    text-align: center;
+    color: #4a5568;
+    padding: 2rem;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+@media (max-width: 1400px) {
     .kanban-columns {
         grid-template-columns: repeat(3, 1fr);
     }
 }
 
+@media (max-width: 1024px) {
+    .dashboard-content {
+        padding: 1.5rem;
+    }
+
+    .kanban-columns {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
 @media (max-width: 768px) {
+    .dashboard-nav {
+        padding: 1rem;
+    }
+
+    .dashboard-content {
+        padding: 1rem;
+    }
+
     .kanban-columns {
         grid-template-columns: 1fr;
     }
 
-    .kanban-column {
-        margin-bottom: 1rem;
+    .project-header-actions {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: flex-start;
     }
-}
 
-.project-header-actions {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1rem;
-}
+    .project-header-actions h1 {
+        font-size: 2rem;
+    }
 
-.edit-project-btn {
-    background: #4a90e2;
-    color: white;
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 0.9rem;
-    transition: background-color 0.2s ease;
-}
+    .form-actions {
+        flex-direction: column;
+    }
 
-.edit-project-btn:hover {
-    background: #357abd;
-}
-
-.edit-project-form {
-    background: white;
-    padding: 1.5rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-bottom: 2rem;
-}
-
-.edit-project-form .form-group {
-    margin-bottom: 1.5rem;
-}
-
-.edit-project-form label {
-    display: block;
-    margin-bottom: 0.5rem;
-    color: #2c3e50;
-    font-weight: 500;
-}
-
-.edit-project-form input,
-.edit-project-form textarea {
-    width: 100%;
-    padding: 0.75rem;
-    border: 1px solid #e1e8ed;
-    border-radius: 4px;
-    font-size: 1rem;
-    transition: border-color 0.2s ease;
-}
-
-.edit-project-form input:focus,
-.edit-project-form textarea:focus {
-    outline: none;
-    border-color: #4a90e2;
-    box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.1);
-}
-
-.edit-project-form textarea {
-    min-height: 100px;
-    resize: vertical;
-}
-
-.edit-project-form .form-actions {
-    display: flex;
-    gap: 1rem;
-    margin-top: 1.5rem;
-}
-
-.edit-project-form .submit-btn {
-    background: #4a90e2;
-    color: white;
-    border: none;
-    padding: 0.75rem 1.5rem;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: 500;
-    transition: background-color 0.2s ease;
-}
-
-.edit-project-form .submit-btn:hover {
-    background: #357abd;
-}
-
-.edit-project-form .cancel-btn {
-    background: #95a5a6;
-    color: white;
-    border: none;
-    padding: 0.75rem 1.5rem;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: 500;
-    transition: background-color 0.2s ease;
-}
-
-.edit-project-form .cancel-btn:hover {
-    background: #7f8c8d;
+    .submit-btn,
+    .cancel-btn {
+        width: 100%;
+    }
 }

@@ -398,15 +398,17 @@ function ProjectDetails() {
                                             <h4>{task.title}</h4>
                                             <p>{task.description}</p>
                                             {task.estimated_effort && (
-                                                <p className="effort">
-                                                    Est. Effort: {task.estimated_effort}h
-                                                </p>
+                                                <div className="effort-container">
+                                                    <span className="effort">
+                                                        Est. Effort: {task.estimated_effort}h
+                                                    </span>
+                                                </div>
                                             )}
                                             <button
                                                 className="delete-task-btn"
                                                 onClick={() => handleDeleteTask(task.task_id)}
                                             >
-                                                Delete
+                                                ×
                                             </button>
                                         </div>
                                     ))}
