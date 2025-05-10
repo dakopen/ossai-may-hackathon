@@ -56,7 +56,10 @@ function Dashboard() {
 
             if (response.ok) {
                 const data = await response.json();
-                setProjects([...projects, data]);
+                const updatedProjects = [...projects, data].sort(
+                    (a, b) => new Date(b.creation_date) - new Date(a.creation_date)
+                );
+                setProjects(updatedProjects);
                 setNewProject({ name: "", description: "", repository_url: "" });
             } else {
                 const errorData = await response.json();
