@@ -1,23 +1,45 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
 import "./App.css";
+import Dashboard from "./components/Dashboard";
 
-function App() {
-    const [message, setMessage] = useState("");
-
-    useEffect(() => {
-        fetch("http://localhost:8000/api/hello/")
-            .then((response) => response.json())
-            .then((data) => setMessage(data.message))
-            .catch((error) => console.error("Error:", error));
-    }, []);
+function Home() {
+    const navigate = useNavigate();
 
     return (
         <div className="App">
-            <header className="App-header">
-                <h1>React + Django App</h1>
-                <p>Message from backend: {message}</p>
-            </header>
+            <nav className="navbar">
+                <div className="logo">OSSAI</div>
+                <button className="dashboard-btn" onClick={() => navigate("/dashboard")}>
+                    Dashboard
+                </button>
+            </nav>
+
+            <main className="hero">
+                <div className="hero-content">
+                    <h1>Welcome to OSSAI</h1>
+                    <p className="subtitle">Your AI-powered open source assistant</p>
+                    <p className="description">
+                        Discover, analyze, and contribute to open source projects with the help of
+                        artificial intelligence.
+                    </p>
+                    <button className="cta-button" onClick={() => navigate("/dashboard")}>
+                        Get Started
+                    </button>
+                </div>
+            </main>
         </div>
+    );
+}
+
+function App() {
+    return (
+        <Router>
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/dashboard" element={<Dashboard />} />
+            </Routes>
+        </Router>
     );
 }
 
