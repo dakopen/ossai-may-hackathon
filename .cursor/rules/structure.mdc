@@ -1,0 +1,85 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Project: AI-First Project Manager
+
+## 1. Project Overview
+
+This project is an AI-first project management software designed to streamline project workflows. Key functionalities include:
+
+*   **Project Creation & Management**: Users can create and manage multiple projects, defining their scope and objectives.
+*   **Task Creation & Management**: Within projects, users can create, update, and track tasks.
+*   **AI-Assisted Task Assignment**: The AI will analyze task requirements and user profiles (skills, workload, aptitudes) to suggest optimal task assignments.
+*   **AI-Powered Project Insights**: The AI will provide insights into project progress, potential bottlenecks, and team performance.
+*   **User Management**: The system will manage users, their roles, and their descriptions relevant to AI task assignment (e.g., skills, capacity).
+
+The goal is to create an intelligent system that not only helps organize work but actively assists in managing it effectively.
+
+## 2. Technology Stack
+
+*   **Backend**: Django (Python framework) - located in the `backend/` directory.
+*   **Frontend**: React (JavaScript library) - located in the `frontend/` directory.
+*   **Database**: SQLite (currently, as indicated by `db.sqlite3` in the `backend` folder, for development).
+*   **AI Components**: To be integrated, likely Python-based libraries for NLP and machine learning, interacting with the Django backend.
+
+## 3. Folder Structure and Key Components
+
+The project is organized into a distinct backend and frontend at the root level:
+
+### 3.1. Root Level Key Directories
+
+*   `backend/`: Contains the Django backend application.
+*   `frontend/`: Contains the React frontend application.
+*   `types/`: Contains project-wide type definitions and documentation (e.g., `types.md`).
+*   `.cursor/rules/`: Contains rules files like this `structure.mdc` to guide AI assistance.
+
+### 3.2. Backend (`backend/`) - Django Project Structure
+
+The backend is a Django project. Key elements include:
+
+*   `manage.py`: Django's command-line utility.
+*   `db.sqlite3`: SQLite database file.
+*   `requirements.txt`: Python dependencies.
+*   **Main Django Project Directory** (e.g., `myproject_backend/` - the directory containing `settings.py`, `urls.py`): Core project configuration.
+*   **Django Apps** (e.g., `api/`, `projects_app/`, `tasks_app/`, `users_app/`): Modular applications within Django.
+    *   An `api/` app will likely handle RESTful API endpoints.
+    *   Each app typically contains `models.py`, `views.py`, `serializers.py` (for DRF), `urls.py`.
+
+### 3.3. Frontend (`frontend/`) - React Application Structure
+
+The frontend is a React application. Based on the provided image and typical structure:
+
+*   `package.json`: Project dependencies and scripts.
+*   `node_modules/`: Installed npm packages.
+*   `.gitignore`: Git ignore specifications.
+*   `README.md`: Frontend specific readme.
+*   `public/`:
+    *   `index.html`: Main HTML shell.
+    *   Static assets (e.g., `logo.svg`, `favicon.ico`).
+*   `src/`: Core frontend source code.
+    *   `index.js`: Application entry point (renders `App`).
+    *   `App.js`: Root React component, handles routing.
+    *   `App.css`, `index.css`: Stylesheets.
+    *   `components/` (Expected): For reusable UI elements.
+    *   `pages/` or `views/` (Expected): For top-level page components.
+    *   `services/` or `api/` (Expected): For backend API communication.
+    *   `contexts/` or `store/` (Expected): For state management.
+    *   `assets/` (Expected): For images, fonts, etc. used within `src`.
+    *   `reportWebVitals.js`, `setupTests.js`: Utilities for performance and testing.
+
+### 3.4. Types (`types/`)
+
+*   `types.md`: Markdown file describing shared data structures and function signatures, useful for both backend and frontend development.
+
+## 4. AI Interaction Flow (Conceptual)
+
+1.  **Frontend**: Captures user actions and data.
+2.  **API Calls**: Frontend communicates with the Django backend via REST APIs.
+3.  **Backend**: Django processes requests, interacts with the database, and calls AI modules.
+4.  **AI Modules**: Perform analysis (e.g., user-task matching, progress prediction).
+5.  **Response**: Backend sends processed data and AI insights back to the frontend.
+6.  **Frontend**: Displays information and suggestions to the user.
+
+This outline should help in understanding the project's layout and intended architecture.
