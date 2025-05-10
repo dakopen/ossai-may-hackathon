@@ -49,7 +49,7 @@ class ProjectViewSet(viewsets.ModelViewSet):
             
             # Prepare prompt for Gemini
             prompt = f"""Given the following project details, generate a list of tasks that need to be completed. 
-            For each task, provide a title, description, and estimated effort in hours.
+            For each task, provide a title, description (bullet points, 3 to 5 short concise sentences), and estimated effort in hours.
             Format each task as a JSON object with 'title', 'description', and 'estimated_effort' fields.
             Return only a JSON array of tasks.
 
